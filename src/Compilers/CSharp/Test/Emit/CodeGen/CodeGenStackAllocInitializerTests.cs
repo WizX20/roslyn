@@ -41,7 +41,7 @@ unsafe class Test
                 parseOptions: TestOptions.Regular.WithLanguageVersion(LanguageVersion.CSharp7_3),
                 options: TestOptions.UnsafeReleaseExe,
                 expectedOutput: "424242424242424242",
-                verify: Verification.Fails).VerifyIL("Test.M<T>(T)", 
+                verify: Verification.Fails).VerifyIL("Test.M<T>(T)",
 @"{
   // Code size      163 (0xa3)
   .maxstack  4
@@ -115,7 +115,7 @@ unsafe class Test
 }");
         }
 
-        [Fact]
+        [Fact(Skip = "https://github.com/dotnet/roslyn/issues/25997")]
         public void TestUnmanaged_Span()
         {
             var comp = CreateCompilationWithMscorlibAndSpan(@"
@@ -225,9 +225,9 @@ class Test
 using System;
 public class C
 {
-    unsafe public static void Main() 
+    unsafe public static void Main()
     {
-        // captured by the lambda. 
+        // captured by the lambda.
         byte x = 1;
         byte* b = stackalloc byte[] {((Func<byte>)(() => x++))(), x};
         Console.Write(b[1]);
@@ -280,7 +280,7 @@ using System;
 static unsafe class C
 {
     static void Use(int* i) {}
-    
+
     static int M() { return 0; }
 
     static void Main()
@@ -538,7 +538,7 @@ static unsafe class C
     {
         return new S { i = i };
     }
-    
+
     static void Main()
     {
         S* p = stackalloc S[3] { M(1), M(2), M(3) };
