@@ -60,8 +60,8 @@ namespace Microsoft.CodeAnalysis.Editor.UnitTests.FindReferences
             {
                 var context = new MockFindUsagesContext();
                 var presenter = new MockStreamingFindUsagesPresenter(context);
-
-                var listenerProvider = new AsynchronousOperationListenerProvider();
+               
+                var listenerProvider = workspace.ExportProvider.GetExportedValue<IAsynchronousOperationListenerProvider>();
 
                 var handler = new FindReferencesCommandHandler(
                     SpecializedCollections.SingletonEnumerable(new Lazy<IStreamingFindUsagesPresenter>(() => presenter)),
